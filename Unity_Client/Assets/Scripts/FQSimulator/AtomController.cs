@@ -334,6 +334,8 @@ public class AtomController : MonoBehaviour
         electronCount = 0;
 
         ActualizarNombre();
+
+        NotificarCambio();
     }
 
     // ── Getters públicos ──────────────────────────────────────
