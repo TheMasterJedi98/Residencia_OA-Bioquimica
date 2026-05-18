@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/FQIntroduction.unity
     guid: 7245ffbcc2e46a8439dc869f82745479
   - enabled: 1
+    path: Assets/Scenes/FQExample.unity
+    guid: 1c0c535b8f7a0804aa90f75b2de9d847
+  - enabled: 1
     path: Assets/Scenes/FQSimulator.unity
     guid: ecd4e8b34f7f65b4b8755f65ac1b13dc
   m_configObjects:
