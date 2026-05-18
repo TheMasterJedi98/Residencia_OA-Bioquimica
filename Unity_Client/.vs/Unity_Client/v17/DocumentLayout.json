@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\USER\\Documents\\GitHub\\Residencia_OA-Bioquimica\\Unity_Client\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{39AB0C2E-3A72-220D-C918-848998D211BB}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\residencia_oa-bioquimica\\unity_client\\assets\\scripts\\bqsimulator\\biouicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39AB0C2E-3A72-220D-C918-848998D211BB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bqsimulator\\biouicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BioUIController.cs",
+              "DocumentMoniker": "C:\\Users\\USER\\Documents\\GitHub\\Residencia_OA-Bioquimica\\Unity_Client\\Assets\\Scripts\\BQSimulator\\BioUIController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\BQSimulator\\BioUIController.cs",
+              "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\Residencia_OA-Bioquimica\\Unity_Client\\Assets\\Scripts\\BQSimulator\\BioUIController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\BQSimulator\\BioUIController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAABrAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-18T07:17:48.113Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
