@@ -26,5 +26,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FQSimulator.unity
     guid: ecd4e8b34f7f65b4b8755f65ac1b13dc
+  - enabled: 1
+    path: Assets/Scenes/FQEvaluation.unity
+    guid: e68383408074062499256c054c9aace8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
