@@ -180,4 +180,27 @@ public class AtomDisplayIntro : MonoBehaviour
             ring.Clear();
         }
     }
+
+    public void SetStateEx(AtomStateEx state, int protons, int neutrons, int electrons)
+    {
+        LimpiarAtomo();
+
+        SpawnNucleus(protons, neutrons);
+        SpawnElectrons(electrons);
+        ActualizarOrbitas(AtomState.Default);
+    }
+
+    public void InicializarCentro()
+    {
+        Canvas.ForceUpdateCanvases();
+
+        RectTransform viewport = GameObject.Find("AtomViewport")
+            .GetComponent<RectTransform>();
+
+        Vector3[] corners = new Vector3[4];
+        viewport.GetWorldCorners(corners);
+
+        worldCenter = (corners[0] + corners[2]) / 2f;
+        worldCenter.z = 0;
+    }
 }

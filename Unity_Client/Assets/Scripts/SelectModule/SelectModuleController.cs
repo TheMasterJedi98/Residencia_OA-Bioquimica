@@ -3,12 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class SelectModuleController : MonoBehaviour
 {
-    private const string SIMULATOR_SCENE = "Introduction";
+    private const string FQINTRODUCTION_SCENE = "FQIntroduction";
     private const string LOGIN_SCENE     = "Login";
 
     public void OnFisicoquimicaClicked()
     {
-        SceneManager.LoadScene(SIMULATOR_SCENE);
+        SceneManager.LoadScene(FQINTRODUCTION_SCENE);
     }
 
     public void OnBiocineticaClicked()

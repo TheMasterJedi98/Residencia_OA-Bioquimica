@@ -24,7 +24,7 @@ public class IntroductionController : MonoBehaviour
     public AtomDisplayIntro atomDisplay;
 
     [Header("Escena siguiente")]
-    private const string NEXT_SCENE = "FQSimulator";
+    private const string NEXT_SCENE = "FQExample";
 
     private int currentCard = 0;
 

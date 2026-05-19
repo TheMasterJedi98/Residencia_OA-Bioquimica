@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class AtomController : MonoBehaviour
 {
@@ -36,6 +37,7 @@ public class AtomController : MonoBehaviour
     private List<GameObject> nucleusParticles = new List<GameObject>();
 
     private AtomInfoPanel infoPanel;
+    private const string FQEVALUATION_SCENE = "FQEvaluation";
 
     // Tabla periódica simplificada (número atómico → nombre)
     private readonly Dictionary<int, string> elementNames = new Dictionary<int, string>()
@@ -334,6 +336,13 @@ public class AtomController : MonoBehaviour
         electronCount = 0;
 
         ActualizarNombre();
+
+        NotificarCambio();
+    }
+
+    public void Avanzar()
+    {
+        SceneManager.LoadScene(FQEVALUATION_SCENE);
     }
 
     // ── Getters públicos ──────────────────────────────────────
