@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class SelectModuleController : MonoBehaviour
 {
     private const string FQINTRODUCTION_SCENE = "FQIntroduction";
+    private const string BQINTRODUCTION_SCENE = "BQIntroduction";
     private const string LOGIN_SCENE     = "Login";
 
     public void OnFisicoquimicaClicked()
@@ -13,8 +14,7 @@ public class SelectModuleController : MonoBehaviour
 
     public void OnBiocineticaClicked()
     {
-        
-        Debug.Log("Biocinetica: aún no implementado");
+        SceneManager.LoadScene(BQINTRODUCTION_SCENE);
     }
 
     public void OnBackButtonClicked()
