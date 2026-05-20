@@ -3,10 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\USER\\Documents\\GitHub\\Residencia_OA-Bioquimica\\Unity_Client\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{39AB0C2E-3A72-220D-C918-848998D211BB}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\residencia_oa-bioquimica\\unity_client\\assets\\scripts\\fqintroandexample\\introductioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39AB0C2E-3A72-220D-C918-848998D211BB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\fqintroandexample\\introductioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{39AB0C2E-3A72-220D-C918-848998D211BB}|Assembly-CSharp.csproj|c:\\users\\user\\documents\\github\\residencia_oa-bioquimica\\unity_client\\assets\\scripts\\bqsimulator\\biouicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{39AB0C2E-3A72-220D-C918-848998D211BB}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\bqsimulator\\biouicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -23,25 +19,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "IntroductionController.cs",
-              "DocumentMoniker": "C:\\Users\\USER\\Documents\\GitHub\\Residencia_OA-Bioquimica\\Unity_Client\\Assets\\Scripts\\FQIntroAndExample\\IntroductionController.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\FQIntroAndExample\\IntroductionController.cs",
-              "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\Residencia_OA-Bioquimica\\Unity_Client\\Assets\\Scripts\\FQIntroAndExample\\IntroductionController.cs",
-              "RelativeToolTip": "Assets\\Scripts\\FQIntroAndExample\\IntroductionController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T04:46:09.047Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "BioUIController.cs",
               "DocumentMoniker": "C:\\Users\\USER\\Documents\\GitHub\\Residencia_OA-Bioquimica\\Unity_Client\\Assets\\Scripts\\BQSimulator\\BioUIController.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\BQSimulator\\BioUIController.cs",
               "ToolTip": "C:\\Users\\USER\\Documents\\GitHub\\Residencia_OA-Bioquimica\\Unity_Client\\Assets\\Scripts\\BQSimulator\\BioUIController.cs",
               "RelativeToolTip": "Assets\\Scripts\\BQSimulator\\BioUIController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAABVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAABrAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-18T07:17:48.113Z",
               "EditorCaption": ""
