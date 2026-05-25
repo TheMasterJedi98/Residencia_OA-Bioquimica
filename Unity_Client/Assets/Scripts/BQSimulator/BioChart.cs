@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BioChart : MonoBehaviour
 {
@@ -6,12 +7,14 @@ public class BioChart : MonoBehaviour
     public LineRenderer lineSustrato;
     public RectTransform chartBounds; // Objeto "Graphic" (panel oscuro)
 
-    private int pointCount = 0;
+    // Almacenamos los datos reales para poder redibujar si la escala cambia
+    private List<Vector2> datosBiomasa = new List<Vector2>();
+    private List<Vector2> datosSustrato = new List<Vector2>();
     
-    // Límites lógicos fijos para el renderizado visual (MVC View bounds)
-    // Coinciden con los ejes dibujados en tu imagen de fondo (ej. 30 hrs y 100 g/L)
-    private const float MAX_VISUAL_TIME = 30f; 
-    private const float MAX_VISUAL_CONC = 100f; 
+    // Límites dinámicos (Auto-escalado) que reemplazan a los const fijos
+    // Los iniciamos en 1f para evitar divisiones entre cero en el primer frame
+    private float maxVisualTime = 1f; 
+    private float maxVisualConc = 1f; 
 
     void Awake()
     {
@@ -21,51 +24,104 @@ public class BioChart : MonoBehaviour
         LimpiarGrafica();
     }
 
-    // Ya no necesitamos configurar límites dinámicos para el renderizado visual simple,
-    // usamos límites fijos para normalizar la gráfica al fondo estático.
-    public void ConfigurarLimites(float maxSustratoInicial) { /* Obsoleto en este enfoque robústo */ }
-
     public void LimpiarGrafica()
     {
         if(lineBiomasa) lineBiomasa.positionCount = 0;
         if(lineSustrato) lineSustrato.positionCount = 0;
-        pointCount = 0;
+        
+        datosBiomasa.Clear();
+        datosSustrato.Clear();
+        
+        // Reiniciamos los límites al limpiar
+        maxVisualTime = 1f;
+        maxVisualConc = 1f;
     }
 
     public void AgregarPunto(float tiempo, float biomasa, float sustrato)
     {
         if(!lineBiomasa || !lineSustrato || !chartBounds) return;
 
-        pointCount++;
-        lineBiomasa.positionCount = pointCount;
-        lineSustrato.positionCount = pointCount;
+        // 1. Guardar los datos matemáticos reales
+        datosBiomasa.Add(new Vector2(tiempo, biomasa));
+        datosSustrato.Add(new Vector2(tiempo, sustrato));
 
+        // 2. Comprobar si este nuevo punto requiere que expandamos los límites visuales
+        bool requiereRedibujado = false;
+
+        if (tiempo > maxVisualTime) 
+        {
+            maxVisualTime = tiempo;
+            requiereRedibujado = true;
+        }
+        if (biomasa > maxVisualConc) 
+        {
+            maxVisualConc = biomasa;
+            requiereRedibujado = true;
+        }
+        if (sustrato > maxVisualConc) 
+        {
+            maxVisualConc = sustrato;
+            requiereRedibujado = true;
+        }
+
+        // 3. Dibujar
+        if (requiereRedibujado)
+        {
+            // Si el límite creció, recalculamos TODOS los puntos para encoger la gráfica y hacer espacio
+            RedibujarTodo();
+        }
+        else
+        {
+            // Si el límite no cambió, es más eficiente solo dibujar el punto nuevo
+            DibujarUltimoPunto();
+        }
+    }
+
+    private void RedibujarTodo()
+    {
+        lineBiomasa.positionCount = datosBiomasa.Count;
+        lineSustrato.positionCount = datosSustrato.Count;
+
+        for (int i = 0; i < datosBiomasa.Count; i++)
+        {
+            CalcularYAsignarPosicion(i, datosBiomasa[i].x, datosBiomasa[i].y, datosSustrato[i].y);
+        }
+    }
+
+    private void DibujarUltimoPunto()
+    {
+        int index = datosBiomasa.Count - 1;
+        lineBiomasa.positionCount = datosBiomasa.Count;
+        lineSustrato.positionCount = datosSustrato.Count;
+        
+        CalcularYAsignarPosicion(index, datosBiomasa[index].x, datosBiomasa[index].y, datosSustrato[index].y);
+    }
+
+    private void CalcularYAsignarPosicion(int index, float tiempo, float biomasa, float sustrato)
+    {
         // --- LÓGICA DE COORDENADAS LOCALES ROBUSTA (MVC View) ---
 
-        // 1. Normalizar valores matemáticos a porcentaje (0 a 1) respecto a los ejes visuales fijos
-        float pctX = Mathf.Clamp01(tiempo / MAX_VISUAL_TIME);
-        float pctY_B = Mathf.Clamp01(biomasa / MAX_VISUAL_CONC);
-        float pctY_S = Mathf.Clamp01(sustrato / MAX_VISUAL_CONC);
+        // 1. Normalizar valores a porcentaje (0 a 1) usando los LÍMITES DINÁMICOS
+        float pctX = Mathf.Clamp01(tiempo / maxVisualTime);
+        float pctY_B = Mathf.Clamp01(biomasa / maxVisualConc);
+        float pctY_S = Mathf.Clamp01(sustrato / maxVisualConc);
 
-        // 2. Obtener el tamaño exacto en píxeles UI del panel "Graphic"
+        // 2. Obtener el tamaño exacto en píxeles UI
         float width = chartBounds.rect.width;
         float height = chartBounds.rect.height;
 
-        // 3. Calcular posición local en píxeles, asumiendo que el pivote de Graphic está en el centro (0.5, 0.5)
-        // Convertimos el rango (0 a 1) al rango (-width/2 a +width/2)
+        // 3. Calcular posición local (Pivote 0.5, 0.5)
         float finalLocalX = (pctX - 0.5f) * width;
         float finalLocalY_B = (pctY_B - 0.5f) * height;
         float finalLocalY_S = (pctY_S - 0.5f) * height;
 
-        // --- SOLUCIÓN DE VISIBILIDAD DEFINITIVA (Local Z-Depth) ---
-        // Al ser hijos de 'Graphic', -1.0f localmente los pone justo ENFRENTE del panel en GAME.
+        // Profundidad Z para visibilidad
         float posZ = -1.0f; 
 
         Vector3 localPosBiomasa = new Vector3(finalLocalX, finalLocalY_B, posZ);
         Vector3 localPosSustrato = new Vector3(finalLocalX, finalLocalY_S, posZ);
 
-        // Asignar los puntos finales directamente (sin TransformPoint)
-        lineBiomasa.SetPosition(pointCount - 1, localPosBiomasa);
-        lineSustrato.SetPosition(pointCount - 1, localPosSustrato);
+        lineBiomasa.SetPosition(index, localPosBiomasa);
+        lineSustrato.SetPosition(index, localPosSustrato);
     }
 }

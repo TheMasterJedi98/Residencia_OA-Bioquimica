@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic; // ¡Nuevo! Necesario para el historial del Tooltip
+using System.Collections.Generic;
 
 public class BioUIController : MonoBehaviour
 {
@@ -46,7 +46,7 @@ public class BioUIController : MonoBehaviour
         public float biomasa;
         public float sustrato;
     }
-    // Lista pública que el Tooltip consultará para buscar datos
+    
     [HideInInspector] 
     public List<PuntoSimulado> historialPuntos = new List<PuntoSimulado>();
 
@@ -94,7 +94,6 @@ public class BioUIController : MonoBehaviour
         indicatorKs.text = sliderKs.value.ToString("F2");
         indicatorYxs.text = sliderYxs.value.ToString("F2");
 
-        // --- ACTUALIZACIÓN DE LA RECTA ANALÍTICA EN TIEMPO REAL ---
         if (analyticChart != null)
         {
             analyticChart.ActualizarLineWeaverBurk(sliderUmax.value, sliderKs.value);
@@ -104,9 +103,8 @@ public class BioUIController : MonoBehaviour
     public void OnIniciarSimulacionClicked()
     {
         textConsole.text = "Simulación en curso...";
-        bioChart.ConfigurarLimites((float)sliderS0.value); 
         bioChart.LimpiarGrafica();
-        historialPuntos.Clear(); // Vaciamos el historial anterior para el Tooltip
+        historialPuntos.Clear(); 
         
         timerGrafica = 0f; 
         currentS = sliderS0.value;
@@ -136,6 +134,9 @@ public class BioUIController : MonoBehaviour
         currentX += deltaX;
         currentS += deltaS;
 
+        // NUEVO: Candado matemático para evitar que el sustrato baje a números negativos (ej. -0.05)
+        if (currentS < 0) currentS = 0;
+
         textTiempo.text = "Tiempo transcurrido: " + timeElapsed.ToString("F2") + " hrs";
 
         double biomasaInicial = sliderX0.value;
@@ -161,13 +162,11 @@ public class BioUIController : MonoBehaviour
             textTiempoDuplicacion.text = "Tiempo de Duplicación:\nIncalculable (µ → 0)";
         }
 
-        // --- ACTUALIZAR GRÁFICA E HISTORIAL ---
         timerGrafica += (float)dt;
         if (timerGrafica >= intervaloMuestreo)
         {
             bioChart.AgregarPunto((float)timeElapsed, (float)currentX, (float)currentS);
             
-            // Guardamos el punto exacto en nuestra lista de memoria para el Tooltip
             PuntoSimulado nuevoPunto;
             nuevoPunto.tiempo = (float)timeElapsed;
             nuevoPunto.biomasa = (float)currentX;
@@ -177,11 +176,17 @@ public class BioUIController : MonoBehaviour
             timerGrafica = 0f;
         }
 
+        // --- MODIFICACIÓN CLAVE: DETENER SIMULACIÓN ---
         if (currentS <= 0.01 && !yaSeAgoto)
         {
             yaSeAgoto = true; 
             textSustratoAgotado.text = $"Sustrato agotado en:\n{timeElapsed:F2} hrs";
-            textConsole.text = $"Sustrato agotado a las t={timeElapsed:F2} hrs. La simulación continúa.";
+            
+            // 1. Cambiamos el texto de la consola para dar feedback
+            textConsole.text = $"Simulación finalizada: Sustrato agotado a las {timeElapsed:F2} hrs.";
+            
+            // 2. Apagamos el motor de simulación. Esto congela la gráfica y los cálculos al instante.
+            isSimulating = false; 
         }
     }
 
